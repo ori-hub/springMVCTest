@@ -122,13 +122,11 @@
             }else{
 
                 $(function () {
-
                     $.ajax({
                         url: "account/updateAccount",
                         data: {id: $cols[0].innerText, name: $cols[1].innerText, age: $cols[2].innerText},
                         dataType: "json",
                         success: function(data){
-
                             nowTi = "";
                             if(data == 1){
 
