@@ -60,4 +60,13 @@
         <aop:pointcut id="pt" expression="execution(* com.ori.service.impl.*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pt" />
     </aop:config>
+
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <!--拦截所有请求-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**/**"/>
+            <bean class="com.ori.interceptor.myInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
