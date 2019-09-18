@@ -40,34 +40,56 @@
         </div>
     </div>
 
-    <script src="http://cdn.bootcss.com/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery/jquery-1.11.0.min.js"><\/script>')</script>
+    <script src="js/jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/bootstrap/bootstable.js"></script>
 
     <script type="text/javascript">
         $(function () {
 
             $.ajax({
-                url: "account/findAllAccount",
+                url: "account/first",
+                headers: {
+                    "requestToken": "127.10.199.25",
+                    "tokenID": ""
+                },
                 data: "",
-                dataType: "json",
+                dataType: "text",
                 success: function(data){
 
-                    for (var i = 0; i < data.length; i++) {
+                    //保存token
+                    sessionStorage.setItem("token", data)
 
-                        var trTemp = $("<tr id='" + data[i].id + "'></tr>");
-                        trTemp.append("<td>" + data[i].id + "</td>");
-                        trTemp.append("<td>"+ data[i].name +"</td>");
-                        trTemp.append("<td>"+ data[i].age +"</td>");
-                        trTemp.appendTo("#mytable");
-                    }
-                    $('#mytable').SetEditable({
-                        $addButton: $('#add')
+                    $.ajax({
+                        url: "account/findAllAccount",
+                        headers: {
+                            "requestToken": "",
+                            "tokenID": sessionStorage.getItem("token")
+                        },
+                        data: "",
+                        dataType: "json",
+                        success: function(data){
+
+                            for (var i = 0; i < data.length; i++) {
+
+                                var trTemp = $("<tr id='" + data[i].id + "'></tr>");
+                                trTemp.append("<td>" + data[i].id + "</td>");
+                                trTemp.append("<td>"+ data[i].name +"</td>");
+                                trTemp.append("<td>"+ data[i].age +"</td>");
+                                trTemp.appendTo("#mytable");
+                            }
+                            $('#mytable').SetEditable({
+                                $addButton: $('#add')
+                            });
+                        },
+                        error: function (err) {
+
+                            alert("加载失败");
+                        }
                     });
                 },
                 error: function (err) {
 
-                    alert("加载失败");
+                    alert("获取token失败");
                 }
             });
         })
@@ -96,6 +118,10 @@
 
                     $.ajax({
                         url: "account/insertAccount",
+                        headers: {
+                            "requestToken": "",
+                            "tokenID": sessionStorage.getItem("token")
+                        },
                         data: {id: $cols[0].innerText, name: $cols[1].innerText, age: $cols[2].innerText},
                         dataType: "json",
                         success: function(data){
@@ -124,6 +150,10 @@
                 $(function () {
                     $.ajax({
                         url: "account/updateAccount",
+                        headers: {
+                            "requestToken": "",
+                            "tokenID": sessionStorage.getItem("token")
+                        },
                         data: {id: $cols[0].innerText, name: $cols[1].innerText, age: $cols[2].innerText},
                         dataType: "json",
                         success: function(data){
@@ -134,11 +164,13 @@
                             }
                             else{
 
+                                rowCancel(but);
                                 alert("编辑失败");
                             }
                         },
                         error: function (err) {
 
+                            rowCancel(but);
                             alert("编辑失败");
 
                             nowTi = "";
@@ -152,18 +184,23 @@
         function rowElim(but) {  //Elimina la fila actual
             var $row = $(but).parents('tr');  //accede a la fila
             var $cols = $row.find('td');  //lee campos
-            params.onBeforeDelete($row);
-            $row.remove();
-            params.onDelete();
 
             if($cols[0].innerText == ""){
                 nowTi = "";
+                params.onBeforeDelete($row);
+                $row.remove();
+                params.onDelete();
+
             }else {
 
                 $(function () {
 
                     $.ajax({
                         url: "account/deleteAccount",
+                        headers: {
+                            "requestToken": "",
+                            "tokenID": sessionStorage.getItem("token")
+                        },
                         data: {id: $cols[0].innerText},
                         dataType: "json",
                         success: function(data){
@@ -171,6 +208,10 @@
                             nowTi = "";
 
                             if(data == 1){
+
+                                params.onBeforeDelete($row);
+                                $row.remove();
+                                params.onDelete();
 
                                 alert("删除成功");
                             }

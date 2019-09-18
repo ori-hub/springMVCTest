@@ -22,8 +22,8 @@
     <!--开启springmvc注解支持-->
     <mvc:annotation-driven />
 
-    <!--设置不拦截静态资源-->
-    <mvc:resources mapping="/js/**" location="/js/" />
+    <!--设置不拦截静态资源
+    <mvc:resources mapping="/js/**" location="/js/" />-->
 
     <!--加载数据连接配置文件-->
     <context:property-placeholder location="classpath:db.properties" />

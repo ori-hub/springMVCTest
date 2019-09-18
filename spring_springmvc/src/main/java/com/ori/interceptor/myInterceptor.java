@@ -1,5 +1,7 @@
 package com.ori.interceptor;
 
+import com.ori.domain.TokenBean;
+import com.ori.token.JWT;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,8 +14,45 @@ public class myInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception{
 
-        System.out.println("拦截器输出");
-        return true;
+        //获取请求头
+        String referer = request.getHeader("requestToken");
+        String token = request.getHeader("tokenID");
+
+        if (!"".equals(referer) && "".equals(token)){
+
+            return true;
+        }
+        else if("".equals(referer) && !"".equals(token)){
+
+            //获取token
+            //验证token是否通过
+            try{
+
+                TokenBean tokenIP = JWT.unsign(token, TokenBean.class);
+
+                if (null == tokenIP || "".equals(tokenIP)){
+
+                    //跳转到错误信息页面
+                    request.getRequestDispatcher("error.jsp").forward(request,response);
+
+                    return false;
+                }
+
+                return true;
+
+            }catch (Exception e){
+
+                e.printStackTrace();
+                return false;
+            }
+        }
+        else {
+
+            //跳转到错误信息页面
+            request.getRequestDispatcher("error.jsp").forward(request,response);
+
+            return false;
+        }
     }
 
     //controller层执行完毕后，返回数据前执行的方法
