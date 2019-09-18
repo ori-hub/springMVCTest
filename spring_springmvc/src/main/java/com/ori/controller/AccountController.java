@@ -52,7 +52,6 @@ public class AccountController {
 
         int id = Integer.valueOf(request.getParameter("id"));
         String name = request.getParameter("name");
-        name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
         int age = Integer.valueOf(request.getParameter("age"));
 
         AccountBean accountBean = new AccountBean();
@@ -95,6 +94,7 @@ public class AccountController {
         out.print(resultNum);
         out.close();
     }
+
     @RequestMapping(path = "/insertAccount")
     public void insertAccountController(HttpServletRequest request, HttpServletResponse response) throws Exception{
 
@@ -104,7 +104,6 @@ public class AccountController {
 
         int id = Integer.valueOf(request.getParameter("id"));
         String name = request.getParameter("name");
-        name = new String(name.getBytes("ISO-8859-1"), "UTF-8");
         int age = Integer.valueOf(request.getParameter("age"));
 
         AccountBean accountBean = new AccountBean();

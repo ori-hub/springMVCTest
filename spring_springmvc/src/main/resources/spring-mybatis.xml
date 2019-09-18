@@ -23,9 +23,7 @@
     <mvc:annotation-driven />
 
     <!--设置不拦截静态资源-->
-    <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/js/**" location="/js/" />
-    <mvc:resources mapping="/images/**" location="/images/" />
 
     <!--加载数据连接配置文件-->
     <context:property-placeholder location="classpath:db.properties" />
