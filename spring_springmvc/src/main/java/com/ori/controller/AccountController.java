@@ -27,6 +27,11 @@ public class AccountController {
     @RequestMapping(path = "/first")
     public void getToken(HttpServletRequest request, HttpServletResponse response){
 
+        //统一设置返回数据格式
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
         /**
          * 生成token
          */
@@ -55,6 +60,11 @@ public class AccountController {
     @RequestMapping(path = "/findAllAccount")
     public void findAllAccountController(HttpServletRequest request, HttpServletResponse response){
 
+        //统一设置返回数据格式
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
         List<AccountBean> list = accountService.findAllAccount();
 
         JSONArray jsonArray = JSONArray.fromObject(list);
@@ -73,6 +83,11 @@ public class AccountController {
 
     @RequestMapping(path = "/updateAccount")
     public void updateAccountController(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        //统一设置返回数据格式
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "no-cache");
+        response.setCharacterEncoding("UTF-8");
 
         int id = Integer.valueOf(request.getParameter("id"));
         String name = request.getParameter("name");
@@ -99,6 +114,11 @@ public class AccountController {
     @RequestMapping(path = "/deleteAccount")
     public void deleteAccountController(HttpServletRequest request, HttpServletResponse response) throws Exception{
 
+        //统一设置返回数据格式
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "no-cache");
+        response.setCharacterEncoding("UTF-8");
+
         int id = Integer.valueOf(request.getParameter("id"));
 
         int resultNum = accountService.deleteAccountById(id);
@@ -117,6 +137,11 @@ public class AccountController {
 
     @RequestMapping(path = "/insertAccount")
     public void insertAccountController(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        //统一设置返回数据格式
+        response.setContentType("application/json");
+        response.setHeader("Pragma", "no-cache");
+        response.setCharacterEncoding("UTF-8");
 
         int id = Integer.valueOf(request.getParameter("id"));
         String name = request.getParameter("name");

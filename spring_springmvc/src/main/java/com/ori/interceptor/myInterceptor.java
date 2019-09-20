@@ -53,10 +53,6 @@ public class myInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView modelAndView) throws Exception{
 
-        //统一设置返回数据格式
-        response.setContentType("application/json");
-        response.setHeader("Pragma", "no-cache");
-        response.setCharacterEncoding("UTF-8");
     }
 
     //一个请求出来完毕，即将销毁的时候执行的方法
